@@ -22,6 +22,8 @@ export const ctrlAuth: objectType = {
   },
   Login: async (req, res) => {
     const { user, password } = req.body;
+    console.log(req.body);
+    
     const userExist = await userModel.findOne({ user });
     if (userExist) {
       const isValid = await bcrypt.compare(password, userExist.password);
