@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FieldValues } from 'react-hook-form'
 import axios from 'axios'
@@ -11,9 +11,20 @@ const Registrarse = () => {
     formState: { errors },
   } = useForm();
 
+  // useEffect(()=>{
+  //   (async()=>{
+  //     try {
+  //       const res = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en')
+  //       console.log(res);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // },[])
+
   const onSubmit = async (data: FieldValues) => {
     const { user, password } = data
-    
+    axios.post('http://localhost:3000/api/auth/register', {user, password})
   };
 
   return (
@@ -97,7 +108,7 @@ const Registrarse = () => {
             </svg>
             <input
               className="pl-2 outline-none border-none"
-              type="text"
+              type="password"
               placeholder="Contraseña"
               {...register("password", {
                 required: true,
@@ -134,7 +145,7 @@ const Registrarse = () => {
             </svg>
             <input
               className="pl-2 outline-none border-none"
-              type="text"
+              type="password"
               placeholder="Confirmar Contraseña"
               {...register("confirmPassword", {
                 required: true,
