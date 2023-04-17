@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import userModel from "../models/user.model";
 import bcrypt from "bcrypt";
-import jwt, { sign } from 'jsonwebtoken'
+import jwt, { sign, verify } from 'jsonwebtoken'
 import { serialize } from 'cookie'
 
 interface objectType {
   Register: (req: Request, res: Response) => void;
   Login: (req: Request, res: Response) => void;
+  Validate: (req: Request, res: Response) => void;
 }
 
 export const ctrlAuth: objectType = {
@@ -39,7 +40,7 @@ export const ctrlAuth: objectType = {
           maxAge: 1000 * 60 * 60 * 24 * 7,
           path: '/'
         });
-        try {
+        try {      
           res.setHeader('Set-Cookie', serialized);
           return res.status(200).json({ success: token})
         } catch (error) {
@@ -50,4 +51,15 @@ export const ctrlAuth: objectType = {
     }
     res.json({msg: "EL usuario ingresado no existe"});
   },
+  Validate: (req, res)=>{
+    const token = req.cookies?.token
+    if(!token) return res.json({msg: "Error, no estas logueado"})
+    try {
+      const decoded = verify(token, process.env.JWT_KEY!);
+      return res.json({decoded})
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
 };

@@ -30,11 +30,19 @@ const Home = () => {
     })();
   }, []);
 
+  // useEffect(() => {
+  //   (async () => {
+  //     const res = await axios.get("http://localhost:3000/api/auth/validate");
+  //     console.log(res);
+  //   })();
+  // }, []);
+
   return (
     <div className="">
       <div className="navbar-menu relative z-50">
         <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-3/4 lg:w-80 sm:max-w-xs pt-6 pb-8 bg-gray-800 overflow-y-auto">
-          <div className="flex w-full items-center px-6 pb-6 mb-6 lg:border-b border-gray-700 text-white">Usuario
+          <div className="flex w-full items-center px-6 pb-6 mb-6 lg:border-b border-gray-700 text-white">
+            Usuario
             <a className="text-xl text-white font-semibold" href="#">
               <img
                 className="h-8"

@@ -17,14 +17,16 @@ const Login = () => {
   const onSubmit = async (data: FieldValues) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        "http://127.0.0.1:3000/api/auth/login",
         data,
         { withCredentials: true }
       );
-        if(res.data.success){
-          navigate('/home')
-          return
-        }
+      console.log(res);
+      
+        // if(res.data.success){
+        //   navigate('/home')
+        //   return
+        // }
         setErrorMsg(res.data.msg);        
     } catch (error) {
       console.log(error);
