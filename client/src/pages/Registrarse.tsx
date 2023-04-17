@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FieldValues } from 'react-hook-form'
-import axios from 'axios'
+import { FieldValues } from "react-hook-form";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Registrarse = () => {
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -11,27 +15,30 @@ const Registrarse = () => {
     formState: { errors },
   } = useForm();
 
-  // useEffect(()=>{
-  //   (async()=>{
-  //     try {
-  //       const res = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en')
-  //       console.log(res);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // },[])
+  const [errorMsg, setErrorMsg] = useState("");
 
   const onSubmit = async (data: FieldValues) => {
-    const { user, password } = data
-    axios.post('http://localhost:3000/api/auth/register', {user, password})
+    const { user, password } = data;
+    try {
+      const res = await axios.post("http://localhost:3000/api/auth/register", {
+        user,
+        password,
+      });
+      if (res.data.msg) {
+        setErrorMsg(res.data.msg);
+        return
+      }
+      navigate('/login');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="h-screen md:flex">
       <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">
         <div>
-          <h1 className="text-white font-bold text-4xl font-sans">iBank</h1>
+          <h1 className="text-white font-bold text-4xl font-sans">CryptoDeveloper</h1>
           <p className="text-white mt-1">
             Una de los mejores proyectos de Ignacio Martello :)!
           </p>

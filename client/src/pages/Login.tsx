@@ -55,7 +55,7 @@ const Login = () => {
               />
             </svg>
             <input
-              className="pl-2 outline-none border-none"
+              className="pl-2 outline-none border-none w-full"
               type="text"
               placeholder="Usuario"
               {...register("user", {
@@ -80,7 +80,7 @@ const Login = () => {
               />
             </svg>
             <input
-              className="pl-2 outline-none border-none"
+              className="pl-2 outline-none border-none w-full"
               type="password"
               placeholder="Contraseña"
               {...register("password", {
@@ -101,7 +101,7 @@ const Login = () => {
       </div>
       <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">
         <div>
-          <h1 className="text-white font-bold text-4xl font-sans">iBank</h1>
+          <h1 className="text-white font-bold text-4xl font-sans">CryptoDeveloper</h1>
           <p className="text-white mt-1">
             Una de los mejores proyectos de Ignacio Martello :)!
           </p>
