@@ -53,6 +53,8 @@ export const ctrlAuth: objectType = {
   },
   Validate: (req, res)=>{
     const token = req.cookies?.token
+    console.log(req);
+    
     if(!token) return res.json({msg: "Error, no estas logueado"})
     try {
       const decoded = verify(token, process.env.JWT_KEY!);

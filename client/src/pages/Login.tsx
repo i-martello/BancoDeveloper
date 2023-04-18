@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, FieldValues } from "react-hook-form";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const [errorMsg, setErrorMsg] = useState('')
+  const [errorMsg, setErrorMsg] = useState("");
 
   const onSubmit = async (data: FieldValues) => {
     try {
@@ -22,12 +22,12 @@ const Login = () => {
         { withCredentials: true }
       );
       console.log(res);
-      
-        // if(res.data.success){
-        //   navigate('/home')
-        //   return
-        // }
-        setErrorMsg(res.data.msg);        
+
+      if (res.data.success) {
+        navigate("/home");
+        return;
+      }
+      setErrorMsg(res.data.msg);
     } catch (error) {
       console.log(error);
     }
@@ -103,7 +103,9 @@ const Login = () => {
       </div>
       <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">
         <div>
-          <h1 className="text-white font-bold text-4xl font-sans">CryptoDeveloper</h1>
+          <h1 className="text-white font-bold text-4xl font-sans">
+            CryptoDeveloper
+          </h1>
           <p className="text-white mt-1">
             Una de los mejores proyectos de Ignacio Martello :)!
           </p>

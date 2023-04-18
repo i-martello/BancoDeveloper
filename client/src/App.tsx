@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import Home from "./pages/Home";
+import Crypto from "./pages/Crypto";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,6 +17,7 @@ function App() {
         <Route path="/registrarse" element={<Registrarse />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/home" element={<Home />}></Route>
+        <Route path="/coin/:id" element={<Crypto />}></Route>
       </Routes>
     </Fragment>
   );
