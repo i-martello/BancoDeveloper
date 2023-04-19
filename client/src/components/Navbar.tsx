@@ -1,21 +1,16 @@
-import React, {useEffect, useState} from "react";
-import {
-  MdOutlineArrowBackIos,
-  MdOutlineArrowForwardIos,
-} from "react-icons/md";
+import {useEffect, useState} from "react";
 import { useGlobalContext } from "../context";
-
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [username, setUsername] = useState("");
 
   const { user }: any = useGlobalContext();
 
-
   useEffect(() => {
     setUsername(user);
-  }, [username]);
-  
+  }, [user]);  
+
   return (
     <div className="navbar-menu relative z-50">
         <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-3/4 lg:w-80 sm:max-w-xs pt-6 pb-8 bg-gray-800 overflow-y-auto">
@@ -36,6 +31,7 @@ const Navbar = () => {
             </h3>
             <ul className="mb-8 text-sm font-medium">
               <li>
+                <Link to='/home'>
                 <a
                   className="flex items-center pl-3 py-3 pr-4 text-gray-50 bg-indigo-500 rounded"
                   href="#"
@@ -68,6 +64,7 @@ const Navbar = () => {
                     </svg>
                   </span>
                 </a>
+                </Link>
               </li>
               <li>
                 <a

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useGlobalContext } from "../context";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import { RiAlertLine } from "react-icons/ri";
 
 interface cryptoType {
   id: string;
@@ -16,7 +17,6 @@ interface cryptoType {
 const Home = () => {
   const { excessAPI, cryptos }: any = useGlobalContext();
   const [saldo, setSaldo] = useState<number>(1000);
-
 
   return (
     <div className="">
@@ -85,41 +85,45 @@ const Home = () => {
                       onClick={() => setSaldo(crypto.current_price / saldo)}
                     >
                       <Link to={`/coin/${crypto.id}`}>
-                      <div className="flex items-center">
-                        <div className="w-16 text-3xl leading-none">
-                          <img
-                            src={crypto.image}
-                            className="cc BTC text-yellow-500"
-                          ></img>
-                        </div>
-                        <div className="w-full text-white m-5">
-                          {crypto.name}
-                          <span className="ml-3 text-gray-400 uppercase">
-                            {crypto.symbol}
-                          </span>
-                        </div>
-                        <div className="inline-block w-[30%] mx-[10%] text-[20px] font-bold text-white">
-                          $ {crypto.current_price}
-                        </div>
+                        <div className="flex items-center">
+                          <div className="w-16 text-3xl leading-none">
+                            <img
+                              src={crypto.image}
+                              className="cc BTC text-yellow-500"
+                            ></img>
+                          </div>
+                          <div className="w-full text-white m-5">
+                            {crypto.name}
+                            <span className="ml-3 text-gray-400 uppercase">
+                              {crypto.symbol}
+                            </span>
+                          </div>
+                          <div className="inline-block w-[30%] mx-[10%] text-[20px] font-bold text-white">
+                            $ {crypto.current_price}
+                          </div>
 
-                        <div
-                          className={
-                            crypto.price_change_percentage_24h > 0
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }
-                        >
-                          {crypto.price_change_percentage_24h}%
+                          <div
+                            className={
+                              crypto.price_change_percentage_24h > 0
+                                ? "text-green-500"
+                                : "text-red-500"
+                            }
+                          >
+                            {crypto.price_change_percentage_24h}%
+                          </div>
                         </div>
-                      </div>
                       </Link>
                     </li>
                   );
                 })
               ) : (
                 <div className="text-white text-center p-10 text-[22px]">
-                  Ha excedido el limite de peticiones, vuelva a intentar en un 1
-                  minuto
+                  <div className="my-5 ml-[50%] text-red-500 text-7xl">
+                    <RiAlertLine />
+                  </div>
+                  <h1 className="text-4xl text-white text-center">
+                    Ha excedido el limite de peticiones, vuelva a intentar en un minuto
+                  </h1>
                 </div>
               )}
             </ul>

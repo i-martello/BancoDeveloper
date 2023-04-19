@@ -26,12 +26,11 @@ const AppProvider = ({ children }: any) => {
           );
           setCryptos(res.data);
           setExcessAPI(false);
-          console.log(res.data);
         } catch (error) {
           setExcessAPI(true);
           console.log(error);
         }
-  },[])
+  },[])  
 
   const fetchDrinks = useCallback( async () => {
     const res = await axios.get('http://127.0.0.1:3000/api/auth/validate', {withCredentials: true})
