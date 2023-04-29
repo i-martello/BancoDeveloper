@@ -7,6 +7,9 @@ import { useSelector } from "react-redux";
 interface cryptos {
   nombre: string;
   saldo: number;
+  img: string;
+  simbolo: string;
+  precio: number;
 }
 
 interface cuentaType {
@@ -53,10 +56,16 @@ const Perfil = () => {
                   >
                     <Link to="">
                       <div className="flex items-center">
-                        <div className="w-full text-white m-5">
+                      <div className="w-16 text-3xl leading-none">
+                            <img
+                              src={crypto.img}
+                              className="cc BTC text-yellow-500"
+                            ></img>
+                          </div>
+                        <div className="w-full text-white m-5 capitalize">
                           {crypto.nombre}
                           <span className="ml-3 text-gray-400 uppercase">
-                            BTC
+                            {crypto.simbolo}
                           </span>
                         </div>
                         <div className="inline-block w-[30%] mx-[10%] text-[20px] font-bold text-white">
