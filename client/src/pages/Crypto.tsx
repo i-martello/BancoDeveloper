@@ -38,6 +38,13 @@ const Crypto = () => {
   const [crypto, setCrypto] = useState<cryptoType>();
 
   const { cryptos }: any = useGlobalContext();
+  const crypto_percentage  = crypto?.ath_change_percentage.toFixed(2);
+  const precioCrypto24hs = crypto?.price_change_percentage_24h.toFixed(2);
+  let crypto_precio24hs: any = crypto?.price_change_24h.toFixed(3);
+  if(crypto?.current_price! < 1){
+    crypto_precio24hs = crypto?.price_change_24h.toFixed(6);
+  };
+
   useEffect(() => {
     setNombreCrypto(id!);
     setCrypto(cryptos.find((crypto: any) => crypto.id === id));
@@ -54,7 +61,9 @@ const Crypto = () => {
   const buySubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const precioCrypto = crypto?.current_price;
-    dispatch(buyCrypto({ precioCrypto, cantidadCompra, nombreCrypto }));
+    const imgCrypto = crypto?.image;
+    const symbolCrypto = crypto?.symbol;
+    dispatch(buyCrypto({ precioCrypto, cantidadCompra, nombreCrypto, imgCrypto, symbolCrypto }));
   };
 
   const sellSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -125,7 +134,7 @@ const Crypto = () => {
                         : "text-red-500"
                     } text-xl font-bold`}
                   >
-                    {crypto?.price_change_percentage_24h}%
+                    {precioCrypto24hs}%
                   </span>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500">Comparación 24hs</span>
@@ -177,7 +186,7 @@ const Crypto = () => {
                         : "text-red-500"
                     } text-xl font-bold`}
                   >
-                    {crypto?.price_change_24h}
+                    {crypto_precio24hs}
                   </span>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500">
@@ -231,7 +240,7 @@ const Crypto = () => {
                         : "text-red-500"
                     } text-xl font-bold`}
                   >
-                    {crypto?.ath_change_percentage}%
+                    {crypto_percentage}%
                   </span>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500">Comparación anual</span>

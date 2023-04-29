@@ -3,6 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 interface state {
   nombre: string;
   saldo: number;
+  img: string;
+  simbolo: string;
+  precio: number;
 }
 
 interface cryptosType {
@@ -23,6 +26,8 @@ const cryptoSlice = createSlice({
       const numCantidad = parseInt(action.payload.cantidadCompra);
       const nameCrypto = action.payload.nombreCrypto;
       const precioCrypto = action.payload.precioCrypto;
+      const imgCrypto = action.payload.imgCrypto;
+      const symbolCrypto = action.payload.symbolCrypto;
       console.log(numCantidad);
       console.log(nameCrypto);
       const cryptoIndex = state.cryptos.findIndex((crypto) => crypto.nombre === nameCrypto);
@@ -31,6 +36,9 @@ const cryptoSlice = createSlice({
         state.cryptos.push({
           nombre: nameCrypto,
           saldo: numCantidad / precioCrypto,
+          img: imgCrypto,
+          simbolo: symbolCrypto,
+          precio: precioCrypto
         });
         
       } else {

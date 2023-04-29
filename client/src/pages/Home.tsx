@@ -19,7 +19,7 @@ const Home = () => {
   const [saldo, setSaldo] = useState<number>(1000);
 
   return (
-    <div className="">
+    <div>
       <Navbar />
       <div className="bg-gray-50 w-[84%] ml-[16%] flex items-center justify-center px-3 py-5">
         <div className="w-full text-gray-800 overflow-hidden border-4 border-white rounded-4xl shadow-lg relative">
@@ -78,6 +78,7 @@ const Home = () => {
             <ul className="relative">
               {!excessAPI ? (
                 cryptos.map((crypto: cryptoType) => {
+                const crypto_price_porcentaje24hs = crypto.price_change_percentage_24h.toFixed(2);
                   return (
                     <li
                       key={crypto.id}
@@ -109,7 +110,7 @@ const Home = () => {
                                 : "text-red-500"
                             }
                           >
-                            {crypto.price_change_percentage_24h}%
+                            {crypto_price_porcentaje24hs}%
                           </div>
                         </div>
                       </Link>
