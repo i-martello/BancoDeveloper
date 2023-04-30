@@ -17,7 +17,7 @@ const Login = () => {
   const onSubmit = async (data: FieldValues) => {
     try {
       const res = await axios.post(
-        "http://127.0.0.1:3000/api/auth/login",
+        "http://localhost:3000/api/auth/login",
         data,
         { withCredentials: true }
       );

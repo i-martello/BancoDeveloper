@@ -23,7 +23,6 @@ export const ctrlAuth: objectType = {
   },
   Login: async (req, res) => {
     const { user, password } = req.body;
-    console.log(req.body);
     
     const userExist = await userModel.findOne({ user });
     if (userExist) {
@@ -53,11 +52,12 @@ export const ctrlAuth: objectType = {
   },
   Validate: (req, res)=>{
     const token = req.cookies?.token
-    console.log(req);
     
     if(!token) return res.json({msg: "Error, no estas logueado"})
     try {
       const decoded = verify(token, process.env.JWT_KEY!);
+      console.log(decoded);
+      
       return res.json({decoded})
     } catch (error) {
       console.log(error);

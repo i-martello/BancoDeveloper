@@ -37,7 +37,7 @@ const Crypto = () => {
 
   const [crypto, setCrypto] = useState<cryptoType>();
 
-  const { cryptos }: any = useGlobalContext();
+  const { cryptos, user }: any = useGlobalContext();
   const crypto_percentage  = crypto?.ath_change_percentage.toFixed(2);
   const precioCrypto24hs = crypto?.price_change_percentage_24h.toFixed(2);
   let crypto_precio24hs: any = crypto?.price_change_24h.toFixed(3);
@@ -63,7 +63,7 @@ const Crypto = () => {
     const precioCrypto = crypto?.current_price;
     const imgCrypto = crypto?.image;
     const symbolCrypto = crypto?.symbol;
-    dispatch(buyCrypto({ precioCrypto, cantidadCompra, nombreCrypto, imgCrypto, symbolCrypto }));
+    dispatch(buyCrypto({ precioCrypto, cantidadCompra, nombreCrypto, imgCrypto, symbolCrypto, user }));
   };
 
   const sellSubmit = (e: React.FormEvent<HTMLFormElement>) => {

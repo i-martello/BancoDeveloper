@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
@@ -10,6 +10,7 @@ interface cryptos {
   img: string;
   simbolo: string;
   precio: number;
+  price: number;
 }
 
 interface cuentaType {
@@ -20,14 +21,34 @@ interface cuentaType {
 }
 
 const Perfil = () => {
-  const { user }: any = useGlobalContext();
+  const { user, cryptos }: any = useGlobalContext();
+  const [precios, setPrecios] = useState<any>();
   const cuenta = useSelector((state: cuentaType) => state.cryptoStore);
   console.log(cuenta);
+
+  useEffect(() => {
+    let prevPrecios: any = { ...precios }; 
+    const copyCryptos = [...cryptos];
+    copyCryptos.forEach((crypto: any) => {
+      cuenta.cryptos.forEach((cuenta) => {
+        if (crypto.id === cuenta.nombre) {
+          prevPrecios[cuenta.nombre] = crypto.current_price;
+        }
+      });
+    });    
+      
+    setPrecios(prevPrecios);  
+  }, []);
+
+  console.log(precios);
+
+  
+
 
   return (
     <div>
       <Navbar />
-      <div className="flex items-center h-screen ml-[20%] w-[60%] justify-center">
+      <div className="flex items-center h-screen ml-[20%] w-[70%] justify-center">
         <div className="w-full bg-[#1f2937] overflow-hidden border-4 border-white rounded-4xl shadow-lg relative">
           <div className="px-5 pb-2">
             <div className="flex"></div>
@@ -40,38 +61,46 @@ const Perfil = () => {
                 placeholder="Search..."
               />
             </div>
-            <h1 className="text-3xl font-light mb-3">Market Overview</h1>
+            <h1 className="text-3xl font-light mb-3">Billetera Virtual</h1>
           </div>
           <div className="bg-[#1f2937] px-2">
             <ul className="relative">
               {cuenta.cryptos.map((crypto) => {
-                let cryptoCuenta = crypto.saldo.toFixed(2);
-                if(crypto.saldo < 1){
-                  cryptoCuenta = crypto.saldo.toFixed(6);
+                let cryptoCuenta: number = Number(crypto.saldo.toFixed(2));
+                const CryptoUSD = (crypto.saldo * crypto.precio).toFixed(2);
+
+                if (crypto.saldo < 1) {
+                  cryptoCuenta = Number(crypto.saldo.toFixed(6));
                 }
                 return (
-                  <li
+                  <li key={crypto.nombre}
                     className="mb-2  p-7 shadow-lg rounded cursor-pointer transition-colors border-b-2 border-transparent hover:border-pink-500"
                     // onClick={() => setSaldo(crypto.current_price / saldo)}
                   >
                     <Link to="">
                       <div className="flex items-center">
-                      <div className="w-16 text-3xl leading-none">
-                            <img
-                              src={crypto.img}
-                              className="cc BTC text-yellow-500"
-                            ></img>
-                          </div>
+                        <div className="text-3xl leading-none">
+                          <img
+                            src={crypto.img}
+                            className=" BTC h-[65%] w-[65%] text-yellow-500"
+                          ></img>
+                        </div>
                         <div className="w-full text-white m-5 capitalize">
                           {crypto.nombre}
-                          <span className="ml-3 text-gray-400 uppercase">
-                            {crypto.simbolo}
-                          </span>
+                          <span className=""></span>
                         </div>
-                        <div className="inline-block w-[30%] mx-[10%] text-[20px] font-bold text-white">
+                        <div className="flex w-[30%] mx-[10%] text-[20px] font-bold text-white">
                           {cryptoCuenta}
+                          <div className="w-[30%] mx-[10%] ml-3 text-gray-400 uppercase text-[20px] font-bold">
+                            {crypto.simbolo}
+                          </div>
                         </div>
-
+                        <div className="flex w-[30%] mx-[10%] text-[20px] font-bold text-white">
+                          {precios ? (precios[crypto.nombre] *cryptoCuenta).toFixed(2) : "undefined"}
+                          <div className="w-[30%] mx-[10%] ml-3 text-gray-400 uppercase text-[20px] font-bold">
+                            USD
+                          </div>
+                        </div>
                         <div
                         // className={
                         //   crypto.price_change_percentage_24h > 0

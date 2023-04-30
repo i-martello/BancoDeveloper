@@ -33,13 +33,14 @@ const AppProvider = ({ children }: any) => {
   },[])  
 
   const fetchDrinks = useCallback( async () => {
-    const res = await axios.get('http://127.0.0.1:3000/api/auth/validate', {withCredentials: true})
+    const res = await axios.get('http://localhost:3000/api/auth/validate', {withCredentials: true})
     setUser(res.data.decoded?.user);
   },[])
   useEffect(() => {
     fetchDrinks();
     callCryptos();
   }, [fetchDrinks, callCryptos])
+  
   return (
     <AppContext.Provider
       value={{ user, excessAPI, cryptos }}

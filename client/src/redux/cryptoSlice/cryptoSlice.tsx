@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 interface state {
   nombre: string;
@@ -28,19 +29,23 @@ const cryptoSlice = createSlice({
       const precioCrypto = action.payload.precioCrypto;
       const imgCrypto = action.payload.imgCrypto;
       const symbolCrypto = action.payload.symbolCrypto;
+      const user = action.payload.user;
       console.log(numCantidad);
       console.log(nameCrypto);
       const cryptoIndex = state.cryptos.findIndex((crypto) => crypto.nombre === nameCrypto);
       if(cryptoIndex === -1){
         state.usd -= numCantidad;
-        state.cryptos.push({
+        const objectCrypto = {
           nombre: nameCrypto,
           saldo: numCantidad / precioCrypto,
           img: imgCrypto,
           simbolo: symbolCrypto,
           precio: precioCrypto
-        });
-        
+        }
+        state.cryptos.push(objectCrypto);
+        (async()=>{
+          await axios.post('http://localhost:3000/api/market/buy', state)
+        })()        
       } else {
         state.usd -= numCantidad;
         state.cryptos[cryptoIndex].saldo += (numCantidad / precioCrypto)
