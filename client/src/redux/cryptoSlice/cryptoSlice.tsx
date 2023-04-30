@@ -10,11 +10,13 @@ interface state {
 }
 
 interface cryptosType {
+  user: string;
   usd: number;
   cryptos: state[];
 }
 
 const initialState = {
+  user: "",
   usd: 1000,
   cryptos: [],
 };
@@ -43,6 +45,7 @@ const cryptoSlice = createSlice({
           precio: precioCrypto
         }
         state.cryptos.push(objectCrypto);
+        state.user = user
         (async()=>{
           await axios.post('http://localhost:3000/api/market/buy', state)
         })()        
