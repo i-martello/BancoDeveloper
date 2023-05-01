@@ -19,7 +19,6 @@ const AppProvider = ({ children }: any) => {
   const [excessAPI, setExcessAPI] = useState<boolean>(false);
 
   const callCryptos = useCallback(async()=>{  
-
         try {
           const res = await axios.get(
             "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en"
@@ -32,14 +31,19 @@ const AppProvider = ({ children }: any) => {
         }
   },[])  
 
-  const fetchDrinks = useCallback( async () => {
+  const userValidate = useCallback( async () => {
     const res = await axios.get('http://localhost:3000/api/auth/validate', {withCredentials: true})
-    setUser(res.data.decoded?.user);
+    setUser(res.data);
+    
   },[])
   useEffect(() => {
-    fetchDrinks();
     callCryptos();
-  }, [fetchDrinks, callCryptos])
+  }, [callCryptos])
+
+  useEffect(() => {
+    userValidate();
+  }, [userValidate])
+  
   
   return (
     <AppContext.Provider

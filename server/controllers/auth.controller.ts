@@ -57,8 +57,9 @@ export const ctrlAuth: objectType = {
     if(!token) return res.json({msg: "Error, no estas logueado"})
     try {
       validarToken(token,(data)=>{
-        
-      return res.json(data)
+      console.log(data);
+      res.json(data.user);
+      
       })
     } catch (error) {
       console.log(error);

@@ -14,26 +14,30 @@ interface cryptos {
   price: number;
 }
 
-interface cuentaType {
-  cryptoStore: {
-    usd: number;
-    cryptos: cryptos[];
-  };
+interface cryptosType {
+  user: string;
+  usd: number;
+  cryptos: cryptos[];
 }
+
+type cuentaType = {
+  cryptoStore: cryptosType;
+};
 
 const Perfil = () => {
   const { user, cryptos }: any = useGlobalContext();
   const [precios, setPrecios] = useState<any>();
+  const [userCryptos, setUserCryptos] = useState<cryptosType>();
   const cuenta = useSelector((state: cuentaType) => state.cryptoStore);
   console.log(cuenta);
 
   useEffect(() => {
     (async () => {
       const cuentaCryptos = await axios.get(
-        "http://localhost:3000/api/market/cuentacryptos"
-      , {withCredentials: true});
-      console.log(cuentaCryptos);
-      
+        "http://localhost:3000/api/market/cuentacryptos",
+        { withCredentials: true }
+      );
+      setUserCryptos(cuentaCryptos.data);
     })();
   }, []);
 
@@ -41,7 +45,7 @@ const Perfil = () => {
     let prevPrecios: any = { ...precios };
     const copyCryptos = [...cryptos];
     copyCryptos.forEach((crypto: any) => {
-      cuenta.cryptos.forEach((cuenta) => {
+      userCryptos?.cryptos.forEach((cuenta) => {
         if (crypto.id === cuenta.nombre) {
           prevPrecios[cuenta.nombre] = crypto.current_price;
         }
@@ -50,8 +54,6 @@ const Perfil = () => {
 
     setPrecios(prevPrecios);
   }, []);
-
-  console.log(precios);
 
   return (
     <div>
@@ -73,7 +75,7 @@ const Perfil = () => {
           </div>
           <div className="bg-[#1f2937] px-2">
             <ul className="relative">
-              {cuenta.cryptos.map((crypto) => {
+              {userCryptos?.cryptos.map((crypto) => {
                 let cryptoCuenta: number = Number(crypto.saldo.toFixed(2));
                 const CryptoUSD = (crypto.saldo * crypto.precio).toFixed(2);
 
@@ -104,14 +106,16 @@ const Perfil = () => {
                             {crypto.simbolo}
                           </div>
                         </div>
+                        {precios[crypto.nombre] ?
                         <div className="flex w-[30%] mx-[10%] text-[20px] font-bold text-white">
-                          {precios
-                            ? (precios[crypto.nombre] * cryptoCuenta).toFixed(2)
-                            : "undefined"}
+                          
+                            {(precios[crypto.nombre] * cryptoCuenta).toFixed(2)}
+                            
                           <div className="w-[30%] mx-[10%] ml-3 text-gray-400 uppercase text-[20px] font-bold">
                             USD
                           </div>
                         </div>
+                        : <h2 className="text-white text-center font-bold">API Excedida</h2>}
                         <div
                         // className={
                         //   crypto.price_change_percentage_24h > 0
@@ -130,11 +134,11 @@ const Perfil = () => {
           </div>
         </div>
         <div className="max-w-xs mx-[5%]">
-          <div className="bg-white shadow-xl rounded-lg py-3">
-            <div className="photo-wrapper p-2">
+          <div className="bg-white shadow-xl rounded-lg py-3 ">
+            <div className="photo-wrapper p-2 ">
               <img
-                className="w-32 h-32 rounded-full mx-auto"
-                src="https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp"
+                className="w-32 h-32 rounded-full mx-auto border-solid border-2 border-[#1f2937]"
+                src="https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527_640.png"
                 alt="John Doe"
               />
             </div>

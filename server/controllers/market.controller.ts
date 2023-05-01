@@ -26,10 +26,13 @@ export const marketCtrl: marketType = {
     
     validarToken(token, async (data)=>{
       if(data){
+        
         const usuario = data.user        
-        const cuenta = await cuentaSchema.findOne({usuario});
+        const cuenta = await cuentaSchema.findOne({user: usuario});
+        console.log(cuenta);
+        
         if(cuenta){
-          return res.json({cuenta});
+          return res.json(cuenta);
         }
         res.json({msg: 'error'});
       }
