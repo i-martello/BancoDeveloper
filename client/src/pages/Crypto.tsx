@@ -65,7 +65,6 @@ const Crypto = () => {
     const imgCrypto = crypto?.image;
     const symbolCrypto = crypto?.symbol;
     dispatch(buyCrypto({ precioCrypto, cantidadCompra, nombreCrypto, imgCrypto, symbolCrypto, user }));
-    navigate('/perfil')
   };
 
   const sellSubmit = (e: React.FormEvent<HTMLFormElement>) => {

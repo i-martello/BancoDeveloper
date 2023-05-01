@@ -33,11 +33,14 @@ const Perfil = () => {
 
   useEffect(() => {
     (async () => {
-      const cuentaCryptos = await axios.get(
+      await axios.get(
         "http://localhost:3000/api/market/cuentacryptos",
         { withCredentials: true }
-      );
-      setUserCryptos(cuentaCryptos.data);
+      ).then(res => {
+        if(!res.data.msg){
+          setUserCryptos(res.data);
+        }
+      })
     })();
   }, []);
 
@@ -53,7 +56,7 @@ const Perfil = () => {
     });
 
     setPrecios(prevPrecios);
-  }, []);
+  }, [precios]);
 
   return (
     <div>

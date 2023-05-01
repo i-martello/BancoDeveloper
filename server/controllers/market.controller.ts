@@ -9,13 +9,12 @@ interface marketType {
 
 export const marketCtrl: marketType = {
   buyCtrl: async (req, res) => {
-    const { user } = req.body
+    const { user, cryptos } = req.body
     const comprador = await cuentaSchema.findOne({user})
-      console.log(comprador);
+      console.log(cryptos);
       
     if(comprador){
       await cuentaSchema.findOneAndUpdate({user}, req.body);
-      
     } else {
       await new cuentaSchema(req.body).save();
     }

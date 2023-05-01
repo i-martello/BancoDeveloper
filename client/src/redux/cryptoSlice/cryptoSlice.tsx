@@ -47,15 +47,19 @@ const cryptoSlice = createSlice({
         };
         state.cryptos.push(objectCrypto);
         state.user = user;
-        (async () => {
-          await axios
-            .post("http://localhost:3000/api/market/buy", state)
-            .then((res) => "enviado");
-        })();
+        console.log(state.cryptos);
+      
       } else {
         state.usd -= numCantidad;
         state.cryptos[cryptoIndex].saldo += numCantidad / precioCrypto;
       }
+      console.log(state.cryptos);
+      
+      (async () => {
+        await axios
+          .post("http://localhost:3000/api/market/buy", state)
+          .then((res) => "enviado");
+      })();
 
     },
     sellCrypto: (state: cryptosType, action) => {
