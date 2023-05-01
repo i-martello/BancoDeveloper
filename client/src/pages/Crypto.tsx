@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { useGlobalContext } from "../context";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { buyCrypto } from "../redux/cryptoSlice/cryptoSlice";
 import { sellCrypto } from "../redux/cryptoSlice/cryptoSlice";
@@ -25,6 +25,7 @@ interface cuentaType {
 }
 
 const Crypto = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const cuenta = useSelector((state: cuentaType) => state?.cryptoStore);
   console.log(cuenta);
@@ -64,12 +65,14 @@ const Crypto = () => {
     const imgCrypto = crypto?.image;
     const symbolCrypto = crypto?.symbol;
     dispatch(buyCrypto({ precioCrypto, cantidadCompra, nombreCrypto, imgCrypto, symbolCrypto, user }));
+    navigate('/perfil')
   };
 
   const sellSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const precioCrypto = crypto?.current_price;
     dispatch(sellCrypto({ precioCrypto, nombreCrypto }));
+    
   };
 
 

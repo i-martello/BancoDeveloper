@@ -32,41 +32,45 @@ const cryptoSlice = createSlice({
       const imgCrypto = action.payload.imgCrypto;
       const symbolCrypto = action.payload.symbolCrypto;
       const user = action.payload.user;
-      console.log(numCantidad);
-      console.log(nameCrypto);
-      const cryptoIndex = state.cryptos.findIndex((crypto) => crypto.nombre === nameCrypto);
-      if(cryptoIndex === -1){
+
+      const cryptoIndex = state.cryptos.findIndex(
+        (crypto) => crypto.nombre === nameCrypto
+      );
+      if (cryptoIndex === -1) {
         state.usd -= numCantidad;
         const objectCrypto = {
           nombre: nameCrypto,
           saldo: numCantidad / precioCrypto,
           img: imgCrypto,
           simbolo: symbolCrypto,
-          precio: precioCrypto
-        }
+          precio: precioCrypto,
+        };
         state.cryptos.push(objectCrypto);
-        state.user = user
-        (async()=>{
-          await axios.post('http://localhost:3000/api/market/buy', state)
-        })()        
+        state.user = user;
+        (async () => {
+          await axios
+            .post("http://localhost:3000/api/market/buy", state)
+            .then((res) => "enviado");
+        })();
       } else {
         state.usd -= numCantidad;
-        state.cryptos[cryptoIndex].saldo += (numCantidad / precioCrypto)
+        state.cryptos[cryptoIndex].saldo += numCantidad / precioCrypto;
       }
-      
-      console.log(state);
+
     },
-    sellCrypto: (state: cryptosType, action) => {      
+    sellCrypto: (state: cryptosType, action) => {
       const nameCrypto = action.payload.nombreCrypto;
       const precioCrypto = action.payload.precioCrypto;
-      const cryptoIndex = state.cryptos.findIndex((crypto) => crypto.nombre === nameCrypto);
-      if(cryptoIndex !== -1){        
-      const newUsd = state.cryptos[cryptoIndex].saldo * precioCrypto       
-      console.log(state.cryptos[cryptoIndex].saldo);
-      
-      state.usd += newUsd
-      state.cryptos.splice(cryptoIndex, 1)
-    }
+      const cryptoIndex = state.cryptos.findIndex(
+        (crypto) => crypto.nombre === nameCrypto
+      );
+      if (cryptoIndex !== -1) {
+        const newUsd = state.cryptos[cryptoIndex].saldo * precioCrypto;
+        console.log(state.cryptos[cryptoIndex].saldo);
+
+        state.usd += newUsd;
+        state.cryptos.splice(cryptoIndex, 1);
+      }
     },
   },
 });

@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 interface cryptos {
   nombre: string;
@@ -27,7 +28,17 @@ const Perfil = () => {
   console.log(cuenta);
 
   useEffect(() => {
-    let prevPrecios: any = { ...precios }; 
+    (async () => {
+      const cuentaCryptos = await axios.get(
+        "http://localhost:3000/api/market/cuentacryptos"
+      , {withCredentials: true});
+      console.log(cuentaCryptos);
+      
+    })();
+  }, []);
+
+  useEffect(() => {
+    let prevPrecios: any = { ...precios };
     const copyCryptos = [...cryptos];
     copyCryptos.forEach((crypto: any) => {
       cuenta.cryptos.forEach((cuenta) => {
@@ -35,15 +46,12 @@ const Perfil = () => {
           prevPrecios[cuenta.nombre] = crypto.current_price;
         }
       });
-    });    
-      
-    setPrecios(prevPrecios);  
+    });
+
+    setPrecios(prevPrecios);
   }, []);
 
   console.log(precios);
-
-  
-
 
   return (
     <div>
@@ -73,7 +81,8 @@ const Perfil = () => {
                   cryptoCuenta = Number(crypto.saldo.toFixed(6));
                 }
                 return (
-                  <li key={crypto.nombre}
+                  <li
+                    key={crypto.nombre}
                     className="mb-2  p-7 shadow-lg rounded cursor-pointer transition-colors border-b-2 border-transparent hover:border-pink-500"
                     // onClick={() => setSaldo(crypto.current_price / saldo)}
                   >
@@ -96,7 +105,9 @@ const Perfil = () => {
                           </div>
                         </div>
                         <div className="flex w-[30%] mx-[10%] text-[20px] font-bold text-white">
-                          {precios ? (precios[crypto.nombre] *cryptoCuenta).toFixed(2) : "undefined"}
+                          {precios
+                            ? (precios[crypto.nombre] * cryptoCuenta).toFixed(2)
+                            : "undefined"}
                           <div className="w-[30%] mx-[10%] ml-3 text-gray-400 uppercase text-[20px] font-bold">
                             USD
                           </div>

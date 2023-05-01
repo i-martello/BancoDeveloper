@@ -1,16 +1,40 @@
 import { Request, Response } from 'express';
-import buySchema from '../models/buy.model';
+import cuentaSchema from '../models/buy.model';
+import { validarToken } from '../jwt/jwt';
 
 interface marketType {
   buyCtrl: (req: Request, res: Response) => void;
+  getCryptosCtrl: (req: Request, res: Response) => void;
 }
 
 export const marketCtrl: marketType = {
   buyCtrl: async (req, res) => {
-    // await new buySchema(req.body).save();
-    console.log(req.body);
-    
+    const { user } = req.body
+    const comprador = await cuentaSchema.findOne({user})
+      console.log(comprador);
+      
+    if(comprador){
+      await cuentaSchema.findOneAndUpdate({user}, req.body);
+      
+    } else {
+      await new cuentaSchema(req.body).save();
+    }
     res.sendStatus(200);    
+  },
+  getCryptosCtrl: async (req, res) => {
+    const token = req.cookies.token;
+    
+    validarToken(token, async (data)=>{
+      if(data){
+        const usuario = data.user        
+        const cuenta = await cuentaSchema.findOne({usuario});
+        if(cuenta){
+          return res.json({cuenta});
+        }
+        res.json({msg: 'error'});
+      }
+    });
+
   }
 }
 

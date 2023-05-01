@@ -3,6 +3,7 @@ import userModel from "../models/user.model";
 import bcrypt from "bcrypt";
 import jwt, { sign, verify } from 'jsonwebtoken'
 import { serialize } from 'cookie'
+import { validarToken } from "../jwt/jwt";
 
 interface objectType {
   Register: (req: Request, res: Response) => void;
@@ -55,10 +56,10 @@ export const ctrlAuth: objectType = {
     
     if(!token) return res.json({msg: "Error, no estas logueado"})
     try {
-      const decoded = verify(token, process.env.JWT_KEY!);
-      console.log(decoded);
-      
-      return res.json({decoded})
+      validarToken(token,(data)=>{
+        
+      return res.json(data)
+      })
     } catch (error) {
       console.log(error);
       
