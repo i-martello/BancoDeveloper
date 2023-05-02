@@ -5,5 +5,6 @@ const router = Router();
 
 router.post('/buy', marketCtrl.buyCtrl);
 router.get('/cuentacryptos', marketCtrl.getCryptosCtrl);
+router.post('/sell', marketCtrl.sellCtrl);
 
 export default router;

@@ -5,6 +5,7 @@ import { validarToken } from '../jwt/jwt';
 interface marketType {
   buyCtrl: (req: Request, res: Response) => void;
   getCryptosCtrl: (req: Request, res: Response) => void;
+  sellCtrl: (req: Request, res: Response) => void;
 }
 
 export const marketCtrl: marketType = {
@@ -37,6 +38,10 @@ export const marketCtrl: marketType = {
       }
     });
 
+  },
+  sellCtrl: async (req, res)=>{
+    console.log(req.body);
+    res.sendStatus(200);    
   }
 }
 

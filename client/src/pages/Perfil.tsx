@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 interface cryptos {
@@ -29,22 +29,22 @@ const Perfil = () => {
   const [precios, setPrecios] = useState<any>();
   const [userCryptos, setUserCryptos] = useState<cryptosType>();
   const cuenta = useSelector((state: cuentaType) => state.cryptoStore);
-  console.log(cuenta);
 
   useEffect(() => {
     (async () => {
-      await axios.get(
-        "http://localhost:3000/api/market/cuentacryptos",
-        { withCredentials: true }
-      ).then(res => {
-        if(!res.data.msg){
-          setUserCryptos(res.data);
-        }
-      })
+      await axios
+        .get("http://localhost:3000/api/market/cuentacryptos", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          if (!res.data.msg) {
+            setUserCryptos(res.data);
+          }
+        });
     })();
   }, []);
 
-  useEffect(() => {
+  const getCryptos = useCallback(() => {
     let prevPrecios: any = { ...precios };
     const copyCryptos = [...cryptos];
     copyCryptos.forEach((crypto: any) => {
@@ -56,7 +56,15 @@ const Perfil = () => {
     });
 
     setPrecios(prevPrecios);
-  }, [precios]);
+  }, [cryptos]);
+
+  useEffect(() => {
+    getCryptos();
+  }, [getCryptos]);
+
+  const sellCrypto = () => {
+    console.log(userCryptos);
+  };
 
   return (
     <div>
@@ -96,7 +104,7 @@ const Perfil = () => {
                         <div className="text-3xl leading-none">
                           <img
                             src={crypto.img}
-                            className=" BTC h-[65%] w-[65%] text-yellow-500"
+                            className=" BTC text-yellow-500"
                           ></img>
                         </div>
                         <div className="w-full text-white m-5 capitalize">
@@ -109,24 +117,27 @@ const Perfil = () => {
                             {crypto.simbolo}
                           </div>
                         </div>
-                        {precios[crypto.nombre] ?
-                        <div className="flex w-[30%] mx-[10%] text-[20px] font-bold text-white">
-                          
+                        {precios[crypto.nombre] ? (
+                          <div className="flex w-[30%] mx-[10%] text-[20px] font-bold text-white">
                             {(precios[crypto.nombre] * cryptoCuenta).toFixed(2)}
-                            
-                          <div className="w-[30%] mx-[10%] ml-3 text-gray-400 uppercase text-[20px] font-bold">
-                            USD
+
+                            <div className="w-[30%] mx-[10%] ml-3 text-gray-400 uppercase text-[20px] font-bold">
+                              USD
+                            </div>
                           </div>
-                        </div>
-                        : <h2 className="text-white text-center font-bold">API Excedida</h2>}
-                        <div
-                        // className={
-                        //   crypto.price_change_percentage_24h > 0
-                        //     ? "text-green-500"
-                        //     : "text-red-500"
-                        // }
-                        >
-                          {/* {crypto_price_porcentaje24hs}% */}
+                        ) : (
+                          <h2 className="text-white text-center font-bold">
+                            API Excedida
+                          </h2>
+                        )}
+                        <div className="flex">
+                          <button
+                            type="submit"
+                            className="text-white w-15  bg-red-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            onClick={sellCrypto}
+                          >
+                            Vender
+                          </button>
                         </div>
                       </div>
                     </Link>

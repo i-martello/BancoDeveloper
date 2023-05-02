@@ -272,17 +272,6 @@ const Crypto = () => {
                       </button>
                   </form>
                 </div>
-                <div className="flex">
-                  <form onSubmit={sellSubmit}>
-                     
-                      <button
-                        type="submit"
-                        className="text-white w-15  bg-red-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                      >
-                        Vender
-                      </button>
-                  </form>
-                </div>
               </div>
               <div className="flex min-w-32 bg-white p-5 mb-4 font-medium">
                 <div className="  rounded-t  text-center shadow-lg ">
