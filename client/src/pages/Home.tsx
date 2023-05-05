@@ -50,8 +50,7 @@ const Home = () => {
                 </a>
               </div>
               <div className="flex-1 group">
-                <a
-                  href="#"
+                <div
                   className="flex items-end justify-center text-center mx-auto px-4 w-full text-gray-400 group-hover:text-pink-500 border-b-2 border-transparent group-hover:border-pink-500"
                 >
                   <span className="block px-1">
@@ -60,7 +59,7 @@ const Home = () => {
                       Saldo disponible: ${saldo}
                     </span>
                   </span>
-                </a>
+                </div>
               </div>
             </div>
           </div>

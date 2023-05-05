@@ -68,9 +68,9 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link
+              <a
                 className="flex items-center pl-3 py-3 pr-4 text-gray-50 hover:bg-gray-900 rounded"
-                to="/perfil"
+                href="/perfil"
               >
                 <span className="inline-block mr-3">
                   <svg
@@ -94,7 +94,7 @@ const Navbar = () => {
                     xmlns="http://www.w3.org/2000/svg"
                   ></svg>
                 </span>
-              </Link>
+              </a>
             </li>
             <li>
               <a

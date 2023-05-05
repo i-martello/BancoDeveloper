@@ -43,8 +43,8 @@ const Perfil = () => {
         });
     })();
   }, []);
-
-  const getCryptos = useCallback(() => {
+  
+  useEffect(() => {
     let prevPrecios: any = { ...precios };
     const copyCryptos = [...cryptos];
     copyCryptos.forEach((crypto: any) => {
@@ -54,13 +54,9 @@ const Perfil = () => {
         }
       });
     });
-
+  
     setPrecios(prevPrecios);
-  }, [cryptos]);
-
-  useEffect(() => {
-    getCryptos();
-  }, [getCryptos]);
+  }, [cryptos, userCryptos]);
 
   const sellCrypto = () => {
     console.log(userCryptos);
