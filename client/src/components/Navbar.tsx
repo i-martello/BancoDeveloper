@@ -35,7 +35,6 @@ const Navbar = () => {
               <Link to="/home">
                 <a
                   className="flex items-center pl-3 py-3 pr-4 text-gray-50 bg-indigo-500 rounded"
-                  href="#"
                 >
                   <span className="inline-block mr-3">
                     <svg

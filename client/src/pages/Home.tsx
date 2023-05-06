@@ -37,19 +37,6 @@ const Home = () => {
                 </a>
               </div>
               <div className="flex-1 group">
-                <a
-                  href="#"
-                  className="flex items-end justify-center text-center mx-auto px-4 w-full text-gray-400 group-hover:text-pink-500 border-b-2 border-transparent group-hover:border-pink-500"
-                >
-                  <span className="block px-1">
-                    <i className="far fa-search text-xl pt-1 mb-1 block"></i>
-                    <span className="block text-xs text-black pb-1">
-                      Search
-                    </span>
-                  </span>
-                </a>
-              </div>
-              <div className="flex-1 group">
                 <div
                   className="flex items-end justify-center text-center mx-auto px-4 w-full text-gray-400 group-hover:text-pink-500 border-b-2 border-transparent group-hover:border-pink-500"
                 >
